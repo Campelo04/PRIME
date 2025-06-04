@@ -1,0 +1,16 @@
+[
+{
+"cod_cliente": "CL001",
+"endereco_entrega": "Rua Dom Cornélio Vermans",
+"estado": "iniciado",
+"itens": [],
+"total": 0.0,
+"formas_de_pagamento": [
+0,
+0,
+0,
+0,
+0
+]
+}
+]

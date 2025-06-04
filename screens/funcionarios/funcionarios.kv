@@ -1,0 +1,105 @@
+<ILabels@Label>: #Labels de informações dos funcionários
+    font_size: dp(12)
+    color:0,0,0
+<DLabels@Label>: #Labels de informações dos funcionários
+    font_size: dp(14)
+    color:0,0,0
+    bold:True
+<FormFunc@BoxLayout>:
+    canvas:
+        Color:
+            rgba:0,0,0,.4
+        RoundedRectangle:
+            size:self.width-5,self.height-5
+            pos:self.x+5,self.y
+        Color:
+            rgb:.7,.7,.7
+        RoundedRectangle:
+            size:self.width-5,self.height-5
+            pos:self.x,self.y+5
+    size_hint_y:None
+    height:200
+    valign:"center"
+    halign:"center"
+    background_color:1,1,1,0
+    background_normal:""
+    padding:3
+    BoxLayout:
+        BoxLayout:
+            size_hint_x:.2
+            Image:
+                source:"Images/v2.png"
+                size:self.size
+                pos:self.pos
+        BoxLayout:
+            spacing:10
+            Label:
+                text:'Nome:'
+            Label: 
+                id:name_label
+                text:root.pessoa.nome+" "+root.pessoa.sobrenome
+    BoxLayout:
+        Label:
+            text:''
+
+
+
+<Funcionarios>:
+    BoxLayout:
+        orientation:"vertical"
+        padding: 10
+
+        canvas:
+            Color:
+                rgb:.9,.9,1
+            Rectangle:
+                pos:self.pos
+                size:self.size
+        BoxLayout:
+            size_hint_y:.08
+            Btn:
+                size_hint_x:.05
+                text:"Novo"
+                on_press:root.cadastrar_funcionario()
+            Label:
+                color:1,0,0
+                text:"Em construção. Temporariamente indisponível."
+            Button:
+                size_hint_x:.05
+                text:"Home"
+                on_press:root.manager.current = "gestao"
+        BoxLayout:
+            spacing:10
+            
+            Box_List:
+                orientation:"vertical"
+                padding:3
+                canvas:
+                    Color:
+                        rgb:0,0,.3
+                    RoundedRectangle:
+                        size:self.width,self.height*.06
+                        pos:self.x,self.y+self.height*.94
+                    Rectangle:
+                        size:self.width,self.height*.03
+                        pos:self.x,self.y+self.height*.94
+                    Line:
+                        rectangle: (self.x+1,self.y, self.width-1, self.height*.94)
+                        width:.5
+                Label:
+                    text:"Funcionário Selecionado"
+                    size_hint_y:.06
+                    color:1,1,1,.8
+                ScrollView:
+                    id:scroll_1
+                    do_scroll_y:True
+                    pos_hint: {'top':1}
+                    
+                    ScrollBox:
+                        id:func_list
+                        orientation:"vertical"
+                        padding:0,10,0,0
+                        spacing:15
+                        size_hint_y:None
+                        height:self.minimum_height
+            

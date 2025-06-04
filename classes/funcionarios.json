@@ -1,0 +1,25 @@
+[
+{
+"nome": "Gabriel",
+"sobrenome": "Campelo Gomes",
+"apelido": "Campelo",
+"cpf": "09809809898",
+"funcao": "Garçon",
+"nivel": 1,
+"endereco": "Rua A, QD 20, Lt 6",
+"celular": 9498098098,
+"senha": "3b611308a72430139aad5183241d0a098daab9da8f08880153455caf4982fd0f"
+
+},
+{
+"nome": "Amanda",
+"sobrenome": "Vasconcelos Dias",
+"apelido": "M�e da tat�",
+"cpf": "132312313123",
+"funcao": "Rua A, QD 20, Lt 6",
+"nivel": 857567567567,
+"endereco": 345,
+"celular": 0,
+"senha": "0438dc2d36ff5ef15941adb6567e9f86893017aea0459c430c660486780024b8"
+}
+]

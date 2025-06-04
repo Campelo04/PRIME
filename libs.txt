@@ -1,0 +1,17 @@
+Lista de bibliotecas TCC - PDV
+    Kivy
+    pynput
+    bson >> apresentou erro mas a instalação do mongodb resolveu
+
+    Próprias da API
+        # - o "uvicorn" nmão estava funcionando/ nã reconhecido como momando do sistema.
+            para resolver use >>> pip install fastapi uvicorn. RESOLVIDO!
+        # - motor
+    
+
+OBRIGATÓRIO
+	rodar a API com o comando python -m uvicorn api:app --reload >> RESOLVIDO POSTERIORMENTE
+	rodar o mongodb com o comanda mongod no terminal
+	
+
+

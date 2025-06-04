@@ -1,0 +1,19 @@
+<Relatorios>:
+    BoxLayout:
+        orientation:"vertical"
+        padding: 10
+        canvas:
+            Color:
+                rgb:.9,.9,1
+            Rectangle:
+                pos:self.pos
+                size:self.size
+        BoxLayout:
+            size_hint_y:.08
+            Label:
+                color:1,0,0
+                text:"RELATÓRIOS! Em construção. Temporariamente indisponível."
+            Button:
+                size_hint_x:.05
+                text:"Home"
+                on_press:root.manager.current = "gestao"

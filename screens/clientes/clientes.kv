@@ -1,0 +1,128 @@
+<FormCliente>:
+    id:formC
+    anchor_x:'center' 
+    anchor_y:'center'
+    size_hint:None,None
+    height:450
+    width:320
+    pos_hint:{'center_x':.5,'center_y':.5}
+    func:
+    canvas:
+        Color:
+            rgb:.7,.7,.7
+        Rectangle:
+            size:self.size
+            pos:self.pos
+    padding:10
+    BoxLayout:
+        orientation:"vertical"
+        spacing:5
+        BoxLayout:
+            size_hint_y:2
+            canvas:
+                Color:
+                    rgb:1,1,1
+                Rectangle:
+                    size:100,100
+                    pos:self.x+self.width/2-50,self.y+self.height/2-50
+                    source:"Images/pessoa.png"
+        BoxLayout:
+            spacing:5
+            Label:
+                text:'Nome'
+                color:0,0,0
+                background_color:0,0,0,0
+                background_normal:""
+                foreground_color: 0,1,255,0.7
+                background_active: 'v.png'
+            TextInput:
+                id:novo_nome_cliente
+                text_hint:"Informe seu nome aqui"
+                color:0,0,0,.4
+        BoxLayout:
+            spacing:5
+            Label:
+                text:'CPF'
+                color:0,0,0
+            TextInput:
+                id:novo_cpf_cliente
+                text_hint:"Informe seu CPF aqui"
+                color:0,0,0,.4
+        BoxLayout:
+            spacing:5
+            Label:
+                text:'Endereço'
+                color:0,0,0
+            TextInput:
+                id:novo_endereco_cliente
+                text_hint:"Informe seu endereço aqui"
+                color:0,0,0,.4
+        BoxLayout:
+            spacing:5
+            Label:
+                text:'Telefone'
+                color:0,0,0
+            TextInput:
+                id:novo_telefone_cliente
+                text_hint:"Informe seu telefone aqui"
+                color:0,0,0,.4
+        FloatLayout:
+            Button:
+                size_hint:None,None
+                width:80
+                height:40
+                pos_hint:{'center_x':.5,'center_y':.5}
+                id:Criar_Cliente
+                text:'text'
+                background_color:0,0,.5
+                background_normal:""
+                color:1,1,1 #root.novo_cliente("","","",
+                on_release: app.root.ids.Clientes.ids.quadro.clear_widgets()
+<Clientes>:
+    id:TelaCliente
+    BoxLayout:
+        orientation:"vertical"
+        padding: 10
+        canvas:
+            Color:
+                rgb:.9,.9,1
+            Rectangle:
+                pos:self.pos
+                size:self.size
+        BoxLayout:
+            spacing: 10
+            orientation:"vertical"
+            size_hint_y:.06
+            canvas:
+                Color:
+                    rgb: .9,.9,.9
+                Rectangle:
+                    pos:self.pos
+                    size:self.size
+            BoxLayout:
+                
+                Btn:
+                    text:"Home"
+                    on_release:app.root.ids.Manager.current ="gestao"
+                Btn:
+                    text:"Novo"
+                    on_release:root.FormularioCliente()
+                Btn:
+                    text:"Bloquear"
+                    on_release:app.root.ids.Login.bloquear()
+                Btn:
+                    text:"Botão"
+                    on_press:app.root.ids.Clientes.ids.TelaCliente
+                Btn:
+                    text:"Limpar"
+                    on_release:root.LimparQuadro()
+        FloatLayout:
+            id:quadro
+            name: "quadro"
+
+        BoxLayout:
+            size_hint_y:.08
+            Label:
+                id:Cliente_Label
+                text:"Label Clientes"
+                color:1,0,0

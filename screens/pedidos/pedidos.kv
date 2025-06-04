@@ -1,0 +1,322 @@
+#:import hex kivy.utils.get_color_from_hex  
+
+<ScrollBox>:
+    #size_hint_y: None
+    #height: self.minimum_height
+    padding:2
+
+
+<Btn>:
+    valign:"center"
+    halign:"center"
+    background_color:1,1,1,0
+    background_normal:""
+    text:"pede ai"
+<Label_Itens>:
+    color:root.color
+    halign:"left"
+    font_size: dp(12)
+    size_hint:.5,.6
+    valign:"top"
+
+<Btn_Item>:
+    id:self.id
+    canvas:
+        Color:
+            rgba:0,0,0,.4
+        RoundedRectangle:
+            size:self.size
+            pos:self.x+3,self.y-3
+        Color:
+            rgb:.7,.7,.7
+        RoundedRectangle:
+            size:self.size
+            pos:self.pos
+    size_hint_y:None
+    height:150
+    valign:"center"
+    halign:"center"
+    background_color:1,1,1,0
+    background_normal:""
+    padding:3
+    BoxLayout:
+        orientation:"vertical"
+        padding:10,10,10,0
+        spacing:5
+        BoxLayout:
+            orientation:"vertical"
+            Label_Itens:
+                text: root.categoria
+                halign: "left"
+                font_size: pt(11)
+            BoxLayout:
+                Label_Itens:
+                    text: root.id
+                    halign: "left"
+                    font_size: pt(11)    
+                Label_Itens:
+                    text: root.nome
+                    halign: "right"
+                    font_size: pt(11)
+            Label_Itens:
+                text: root.valor
+                halign: "left"
+                font_size: pt(11)
+
+<MyOption@SpinnerOption>
+    font_size: pt(10)
+    background_color:1,1,1,.8
+<Btn_Pedido>:
+    id:self.id
+    canvas:
+        Color:
+            rgba:0,0,0,.4
+        RoundedRectangle: #Rounded
+            size:self.size
+            pos:self.x+3,self.y-3
+        Color:
+            rgb:hex(root.minha_cor(str(root.estado))) #hex('#00BFFF')
+        RoundedRectangle:
+            size:self.size
+            pos:self.pos
+    size_hint_y:None
+    height:pt(140)
+    valign:"center"
+    halign:"center"
+    background_color:1,1,1,0
+    background_normal:""
+    padding:3
+    BoxLayout:
+        orientation:"vertical"
+        padding:10,10,10,0
+        spacing:5
+        BoxLayout:
+            orientation:"vertical"
+            BoxLayout:
+                Label_Itens:
+                    text: "Nome"
+                    halign: "left"
+                    font_size: pt(11)    
+                Label_Itens:
+                    text: root.id
+                    halign: "right"
+                    font_size: pt(11)
+                Button:
+                    text: 'X'
+                    color:1,0,0
+                    background_color:1,1,1,0
+                    background_normal:""
+                    size_hint_x:None
+                    width:self.height
+                    on_release: 
+                        app.root.ids.Pedidos.ids.verifi_mensage.text = str(root.deletar(root.id))
+                        app.root.ids.Pedidos.ids.lista_pedidos.clear_widgets()
+                        app.root.ids.Pedidos.carregar_pedidos("")
+                    #root.editar_campo(root.id,"estado","CANCELADO")
+
+            TextInput:
+                text: root.id_cliente
+                hint_text: "Informe o nome do cliente aqui"
+                font_size: pt(11)
+                multiline: False
+                background_color:1,1,1,0
+                background_normal:""
+                on_text_validate: root.editar_campo(root.id,"id_cliente",self.text)
+                
+
+        BoxLayout:
+            spacing:5
+            BoxLayout:
+                orientation:"vertical"
+                Label_Itens:
+                    text:'Origem:'
+                    halign:"left"
+                    font_size: pt(11)
+                MySpinner:
+                    id:spinner_id                   
+                    text:root.origem
+                    values:["Instagram","WhatsApp","Telefone","Ifood","PedeAi"]
+                    background_color:1,1,1,.8
+                    color:0,0,0
+                    background_normal:""
+                    on_text: root.editar_campo(root.id,"origem",self.text)
+                    option_cls: "MyOption"
+                    font_size: pt(11)
+                    
+            BoxLayout:
+                orientation:"vertical"
+                Label_Itens:
+                    text:'Estado:'
+                    halign:"left"
+                    font_size: pt(11)
+                MySpinner:
+                    id:spinner_id2
+                    text:root.estado
+                    values:["Criado","Em produção","Em rota ","Entregue/servido","Finalizado"]
+                    background_color:1,1,1,.8
+                    color:0,0,0
+                    font_size: pt(11)
+                    background_normal:""
+                    halign:"left"
+                    on_text: 
+                        root.editar_campo(root.id,"estado",self.text)
+                        app.root.ids.Pedidos.ids.lista_pedidos.clear_widgets()
+                        app.root.ids.Pedidos.carregar_pedidos("")
+        BoxLayout:
+            spacing:5
+            BoxLayout:
+                orientation:"vertical"
+                Label_Itens:
+                    text: "Criação:"
+                    font_size: pt(11)
+                    halign: "left"
+                Label_Itens:
+                    text: root.abertura
+                    font_size: pt(11)
+                    halign: "left"
+                    color:0,0,1
+            BoxLayout:
+                orientation:"vertical"
+                Label_Itens:
+                    text: "Encerramento:"
+                    font_size: pt(11)
+                    halign: "left"
+                    
+                Label_Itens:
+                    text: root.fechamento
+                    font_size: pt(11)
+                    halign: "left"
+                    color:1,0,0
+
+            #Iniciado:
+            #Preparando:
+            #Servido:
+            #Cancelado:
+            #Encerrado:
+<Pedidos>:
+    BoxLayout:
+        spacing: 10
+        orientation:"vertical"
+        canvas:
+            Color:
+                rgb: .9,.9,.9
+            Rectangle:
+                pos:self.pos
+                size:self.size
+        BoxLayout:
+            size_hint_y:.06
+            Btn:
+                text:"Home"
+                on_release:app.root.ids.Manager.current ="gestao"
+            Btn:
+                text:"Novo"
+                on_press:
+                    root.ids.verifi_mensage.text = str(root.criar_pedido(str(root.gerar_codigo())))
+                    root.ids.lista_pedidos.clear_widgets()
+                    root.carregar_pedidos("")
+
+                    #root.ids.status_bar.text = str(root.novo_pedido("2025001", "CLI001", "FUNC001", "itemqualquer", "100,00", "primeiro pedido de todos. HELLO WORLD!")) #str())
+                    #app.root.ids.status_bar.text("O Botão comunicou com a Label")
+
+            Btn:
+                text:"Bloquear"
+                on_release:app.root.ids.Login.bloquear()
+            
+            Btn:
+                text:"Botão"
+                on_release: 
+                    root.carregar_pedidos("")
+                    root.ids.verifi_mensage.text=str(root.carregar_cardapio(""))
+            Btn:
+                text:"Limpar"
+                on_press: 
+                    root.limpar()
+                    root.ids.verifi_mensage.text = ""
+        BoxLayout:
+            padding:10
+            spacing:10
+            Box_List:
+                orientation:"vertical"
+                padding:3
+                #size_hint_x:None
+                #width:325
+                canvas:
+                    Color:
+                        rgb:0,0,.3
+                    RoundedRectangle:
+                        size:self.width,self.height*.06
+                        pos:self.x,self.y+self.height*.94
+                    Rectangle:
+                        size:self.width,self.height*.03
+                        pos:self.x,self.y+self.height*.94
+                    Line:
+                        rectangle: (self.x+1,self.y, self.width-1, self.height*.94)
+                        width:.5
+                Label:
+                    text:"Em aberto"
+                    size_hint_y:.06
+                    color:1,1,1,.8
+                ScrollView:
+                    id:scroll_1
+                    do_scroll_y:True
+                    pos_hint: {'top':1}
+                    
+                    ScrollBox:
+                        id:itens_cardapio
+                        orientation:"vertical"
+                        padding:0,10,0,0
+                        spacing:15
+                        size_hint_y:None
+                        height:self.minimum_height
+
+                        
+            Box_List:
+                orientation:"vertical"
+                padding:3
+                #size_hint_x:None
+                #width:325
+                canvas:
+                    Color:
+                        rgb:0,0,.3
+                    RoundedRectangle:
+                        size:self.width,self.height*.06
+                        pos:self.x,self.y+self.height*.94
+                    Rectangle:
+                        size:self.width,self.height*.03
+                        pos:self.x,self.y+self.height*.94
+                    Line:
+                        rectangle: (self.x+1,self.y, self.width-0.5, self.height*.94)
+                        width:.5
+                Label:
+                    text:"Encerrados"
+                    size_hint_y:.06
+                    color:1,1,1,.8
+                ScrollView:
+                    id:scroll_1
+                    do_scroll_y:True
+                    pos_hint: {'top':1}
+                    
+                    ScrollBox:
+                        id:lista_pedidos
+                        orientation:"vertical"
+                        padding:7
+                        spacing:10
+                        size_hint_y:None
+                        height:self.minimum_height
+        BoxLayout:
+            orientation:'vertical'
+            size_hint_y:.03
+            canvas:
+                Color:
+                    rgb:1,1,1
+                Rectangle:
+                    size:self.size
+                    pos:self.pos
+            MyFooterLabel:
+                id:verifi_mensage
+                size_hint:1,1
+                text_hint:"Hello world"
+                color:0,0,0
+
+
+                    
