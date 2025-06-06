@@ -271,10 +271,12 @@ class Pedidos(Screen):
             response = requests.get(f"{API_URL}{produto_id}")
         except:
             return "Falha na comunicação.\nVerifique o seu funcionamento da API."
+        print(str(response.json()))
         for i in response.json():
             print("# PRODUTOS AQUI")
             p = Produto(**i)
-            self.ids.itens_cardapio.add_widget(Btn_Item(p.categoria,p.codigo,p.nome,p.valor))
+            print(f'{p.categoria},{p.codigo},{p.nome},{p.valor}')
+        #     self.ids.itens_cardapio.add_widget(Btn_Item(p.categoria,p.codigo,p.nome,p.valor))
 # ITENS
     def obter_itens(self,pedido_id=""):
         print(f"\n\nID DO PEDIDO AQUI, MISÉEEERA! {pedido_id} \n\n")
