@@ -56,6 +56,12 @@ class Btn(Button):
             self.background_color=self.original
             self.color=self.color_original
             self.bold=False
+class Btn_Categoria(Button,BoxLayout):
+    def __init__(self, categoria, **kwargs):
+        self.categoria = categoria
+        super().__init__(**kwargs)
+
+        
 
 class Btn_Item(Button,BoxLayout): #,
     def __init__(self, categoria, id, nome, valor,**kwargs):
@@ -276,7 +282,23 @@ class Pedidos(Screen):
             print("# PRODUTOS AQUI")
             p = Produto(**i)
             print(f'{p.categoria},{p.codigo},{p.nome},{p.valor}')
-        #     self.ids.itens_cardapio.add_widget(Btn_Item(p.categoria,p.codigo,p.nome,p.valor))
+            self.ids.itens_cardapio.add_widget(Btn_Item(p.categoria,p.codigo,p.nome,p.valor))
+    def carregar_categorias(self,produto_id):
+        API_URL = "http://127.0.0.1:8000/produtos/"
+        try:
+            response = requests.get(f"{API_URL}{produto_id}")
+        except:
+            return "Falha na comunicação.\nVerifique o seu funcionamento da API."
+        print(str(response.json()))
+        ctrl_categoria = ""
+        for i in response.json():
+            print("# PRODUTOS AQUI")
+            p = Produto(**i)
+            
+            print(f'{p.categoria},{p.codigo},{p.nome},{p.valor}')
+            if p.categoria != ctrl_categoria:
+                ctrl_categoria = p.categoria
+                self.ids.itens_cardapio.add_widget(Btn_Categoria(p.categoria))
 # ITENS
     def obter_itens(self,pedido_id=""):
         print(f"\n\nID DO PEDIDO AQUI, MISÉEEERA! {pedido_id} \n\n")

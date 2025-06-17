@@ -28,7 +28,7 @@
             size:self.size
             pos:self.x+3,self.y-3
         Color:
-            rgb:.7,.7,.7
+            rgb:hex("#4169e1")
         RoundedRectangle:
             size:self.size
             pos:self.pos
@@ -60,6 +60,40 @@
                     font_size: pt(11)
             Label_Itens:
                 text: root.valor
+                halign: "left"
+                font_size: pt(11)
+<Btn_Categoria>:
+    id:self.id
+    canvas:
+        Color:
+            rgba:0,0,0,.4
+        RoundedRectangle:
+            size:self.size
+            pos:self.x+3,self.y-3
+        Color:
+            rgb:hex("#4169e1")
+        RoundedRectangle:
+            size:self.size
+            pos:self.pos
+    size_hint_y:None
+    on_release:
+        app.root.ids.Pedidos.ids.itens_cardapio.clear_widgets()
+        app.root.ids.Pedidos.carregar_cardapio("")
+        app.root.ids.Pedidos.ids.header_itens.add_widget(Back())
+    height:150
+    valign:"center"
+    halign:"center"
+    background_color:1,1,1,0
+    background_normal:""
+    padding:3
+    BoxLayout:
+        orientation:"vertical"
+        padding:10,10,10,0
+        spacing:5
+        BoxLayout:
+            orientation:"vertical"
+            Label_Itens:
+                text: root.categoria
                 halign: "left"
                 font_size: pt(11)
 
@@ -193,6 +227,10 @@
             #Servido:
             #Cancelado:
             #Encerrado:
+<Back@Button>:
+    on_release:
+        app.root.ids.Pedidos.ids.itens_cardapio.clear_widgets()
+        app.root.ids.Pedidos.carregar_categorias()
 <Pedidos>:
     BoxLayout:
         spacing: 10
@@ -226,7 +264,8 @@
                 text:"Botão"
                 on_release: 
                     root.carregar_pedidos("")
-                    root.ids.verifi_mensage.text=str(root.carregar_cardapio(""))
+                    #root.ids.verifi_mensage.text=str(root.carregar_cardapio(""))
+                    root.ids.verifi_mensage.text=str(root.carregar_categorias(""))
             Btn:
                 text:"Limpar"
                 on_press: 
@@ -252,10 +291,12 @@
                     Line:
                         rectangle: (self.x+1,self.y, self.width-1, self.height*.94)
                         width:.5
-                Label:
-                    text:"Em aberto"
+                BoxLayout:
+                    id: header_itens
                     size_hint_y:.06
-                    color:1,1,1,.8
+                    Label:
+                        text:"Em aberto"
+                        color:1,1,1,.8
                 ScrollView:
                     id:scroll_1
                     do_scroll_y:True
