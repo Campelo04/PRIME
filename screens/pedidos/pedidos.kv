@@ -23,12 +23,12 @@
     id:self.id
     canvas:
         Color:
-            rgba:0,0,0,.4
+            rgb:hex("#4169e1")
         RoundedRectangle:
             size:self.size
             pos:self.x+3,self.y-3
         Color:
-            rgb:hex("#4169e1")
+            rgb:hex("#87CEFA")
         RoundedRectangle:
             size:self.size
             pos:self.pos
@@ -39,29 +39,46 @@
     background_color:1,1,1,0
     background_normal:""
     padding:3
+    on_release:
+        
+
     BoxLayout:
         orientation:"vertical"
         padding:10,10,10,0
         spacing:5
+        Label_Itens:
+            text: root.id
+            halign: "left"
+            font_size: pt(11)
         BoxLayout:
-            orientation:"vertical"
             Label_Itens:
-                text: root.categoria
+                text: root.categoria + " de " + root.nome
                 halign: "left"
                 font_size: pt(11)
-            BoxLayout:
-                Label_Itens:
-                    text: root.id
-                    halign: "left"
-                    font_size: pt(11)    
-                Label_Itens:
-                    text: root.nome
-                    halign: "right"
-                    font_size: pt(11)
-            Label_Itens:
-                text: root.valor
-                halign: "left"
-                font_size: pt(11)
+        Label_Itens:
+            text: "R$ "+root.valor
+            halign: "right"
+            font_size: pt(11)
+<Back>:
+    id: Back
+    size_hint_x:0
+    background_color:0,0,0,0
+    background_normal:""
+    canvas:
+        Color:
+            rgb:1,1,1
+        Rectangle:
+            pos: self.x+self.height*0.2,self.y+self.height*0.2
+            size: self.height*0.6,self.height*0.6
+            source:"Images/voltar.png"
+    on_release:
+        app.root.ids.Pedidos.ids.itens_cardapio.clear_widgets()
+        #root.carregar_categorias("")
+        app.root.ids.Pedidos.ids.verifi_mensage.text=str(app.root.ids.Pedidos.carregar_categorias(""))
+        app.root.ids.Pedidos.ids.back.size_hint_x =0
+        #app.root.ids.Pedidos.ids.header_itens.clear_widgets()
+        
+
 <Btn_Categoria>:
     id:self.id
     canvas:
@@ -71,31 +88,26 @@
             size:self.size
             pos:self.x+3,self.y-3
         Color:
-            rgb:hex("#4169e1")
+            rgb:hex("#fdfdfd")
         RoundedRectangle:
             size:self.size
             pos:self.pos
     size_hint_y:None
     on_release:
         app.root.ids.Pedidos.ids.itens_cardapio.clear_widgets()
-        app.root.ids.Pedidos.carregar_cardapio("")
-        app.root.ids.Pedidos.ids.header_itens.add_widget(Back())
-    height:150
-    valign:"center"
-    halign:"center"
+        app.root.ids.Pedidos.carregar_cardapio_categoria(root.ids.esta_categoria.text)
+        app.root.ids.Pedidos.ids.back.size_hint_x =.2
+        app.root.ids.Pedidos.ids.verifi_mensage.text = app.root.ids.Pedidos.ids.header_itens_label.text
+    height:75
     background_color:1,1,1,0
     background_normal:""
     padding:3
-    BoxLayout:
-        orientation:"vertical"
-        padding:10,10,10,0
-        spacing:5
-        BoxLayout:
-            orientation:"vertical"
-            Label_Itens:
-                text: root.categoria
-                halign: "left"
-                font_size: pt(11)
+    Label_Itens:
+        id: esta_categoria
+        valign:"center"
+        halign:"center"
+        text: root.categoria
+        font_size: pt(11)
 
 <MyOption@SpinnerOption>
     font_size: pt(10)
@@ -227,10 +239,9 @@
             #Servido:
             #Cancelado:
             #Encerrado:
-<Back@Button>:
-    on_release:
-        app.root.ids.Pedidos.ids.itens_cardapio.clear_widgets()
-        app.root.ids.Pedidos.carregar_categorias()
+
+
+
 <Pedidos>:
     BoxLayout:
         spacing: 10
@@ -263,6 +274,7 @@
             Btn:
                 text:"Botão"
                 on_release: 
+                    root.limpar()
                     root.carregar_pedidos("")
                     #root.ids.verifi_mensage.text=str(root.carregar_cardapio(""))
                     root.ids.verifi_mensage.text=str(root.carregar_categorias(""))
@@ -295,8 +307,25 @@
                     id: header_itens
                     size_hint_y:.06
                     Label:
+                        id: header_itens_label
                         text:"Em aberto"
                         color:1,1,1,.8
+                    Back:
+                        id: back
+                        # size_hint_x:.2
+                        # background_color:0,0,0,0
+                        # background_normal:""
+                        # canvas:
+                        #     Color:
+                        #         rgb:1,1,1
+                        #     Rectangle:
+                        #         pos: self.x+self.height*0.2,self.y+self.height*0.2
+                        #         size: self.height*0.6,self.height*0.6
+                        #         source:"Images/voltar.png"
+                        # on_release:
+                        #     root.ids.itens_cardapio.clear_widgets()
+                        #     #root.carregar_categorias("")
+                        #     root.ids.verifi_mensage.text=str(root.carregar_categorias(""))
                 ScrollView:
                     id:scroll_1
                     do_scroll_y:True
@@ -305,7 +334,7 @@
                     ScrollBox:
                         id:itens_cardapio
                         orientation:"vertical"
-                        padding:0,10,0,0
+                        padding:10,10,10,10
                         spacing:15
                         size_hint_y:None
                         height:self.minimum_height

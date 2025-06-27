@@ -59,6 +59,7 @@ class Btn(Button):
 class Btn_Categoria(Button,BoxLayout):
     def __init__(self, categoria, **kwargs):
         self.categoria = categoria
+        self.bind(size=self.setter('text_size')) 
         super().__init__(**kwargs)
 
         
@@ -84,6 +85,8 @@ class Btn_Item(Button,BoxLayout): #,
             return "Falha na cominicação.\nVerifique o seu funcionamento da API."
         return response.json()
     
+
+
 class Btn_Pedido(Button,BoxLayout):
     def __init__(self, id, codigo, id_cliente, id_funcionario, itens, origem, valor, abertura, fechamento, estado, obs, **kwargs):
         self.id = id
@@ -229,7 +232,9 @@ class MySpinner(Spinner):
         self.halign = "left"
         self.padding = 10,0,0,0
         self.bind(size=self.setter('text_size'))
-  
+class Back(Button):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
      
 class Pedidos(Screen):
     def __init__(self, **kw):
@@ -283,6 +288,22 @@ class Pedidos(Screen):
             p = Produto(**i)
             print(f'{p.categoria},{p.codigo},{p.nome},{p.valor}')
             self.ids.itens_cardapio.add_widget(Btn_Item(p.categoria,p.codigo,p.nome,p.valor))
+    def carregar_cardapio_categoria(self,categoria):
+        self.categoria = categoria
+        self.produto_id = ""
+        API_URL = "http://127.0.0.1:8000/produtos/"
+        try:
+            response = requests.get(f"{API_URL}{self.produto_id}")
+        except:
+            return "Falha na comunicação.\nVerifique o seu funcionamento da API."
+        print(str(response.json()))
+        #self.ids.Pedidos.ids.header_itens.add_widget(Back)
+        for i in response.json():
+            print("# PRODUTOS AQUI")
+            p = Produto(**i)
+            print(f'{p.categoria},{p.codigo},{p.nome},{p.valor}')
+            if p.categoria == self.categoria:
+                self.ids.itens_cardapio.add_widget(Btn_Item(p.categoria,p.codigo,p.nome,p.valor))
     def carregar_categorias(self,produto_id):
         API_URL = "http://127.0.0.1:8000/produtos/"
         try:
