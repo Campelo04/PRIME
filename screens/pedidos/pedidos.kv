@@ -112,6 +112,41 @@
 <MyOption@SpinnerOption>
     font_size: pt(10)
     background_color:1,1,1,.8
+
+<Pedido_aberto>:
+    size_hint:1,None
+    height:pt(540)
+    orientation:"vertical"
+    padding:10,100,10,10
+    canvas:
+        Color:
+            rgb:hex("#ffffdd")
+        Rectangle:
+            size: self.size
+            pos:self.pos
+    Label_Itens: #Cabeçalho
+        size_hint_y:None
+        size_hint_x:1
+        height:dp(100)
+        text: "Pedido"+root.id
+        halign: 'center'
+        color:.1,.1,.1
+        font_size:14
+    Label_Itens: #Corpo
+        text: "Itens do Pedido selecionado"
+        halign: 'center'
+        size_hint_x:1
+        color:.1,.1,.1
+        font_size:14
+    Label_Itens: #Rodapé
+        size_hint_y:None
+        size_hint_x:1
+        height:dp(100)
+        text: "Total: R$ 100,00S"
+        halign: 'center'
+        color:.1,.1,.1
+        font_size:14
+
 <Btn_Pedido>:
     id:self.id
     canvas:
@@ -132,6 +167,9 @@
     background_color:1,1,1,0
     background_normal:""
     padding:3
+    on_release:
+        app.root.ids.Pedidos.ids.lista_pedidos.clear_widgets()
+        app.root.ids.Pedidos.abrir_pedido(self.id)
     BoxLayout:
         orientation:"vertical"
         padding:10,10,10,0

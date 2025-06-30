@@ -84,8 +84,11 @@ class Btn_Item(Button,BoxLayout): #,
         except:
             return "Falha na cominicação.\nVerifique o seu funcionamento da API."
         return response.json()
-    
-
+   
+class Pedido_aberto(BoxLayout):
+    def __init__(self, id, **kwargs):
+        self.id = id
+        super().__init__(**kwargs)
 
 class Btn_Pedido(Button,BoxLayout):
     def __init__(self, id, codigo, id_cliente, id_funcionario, itens, origem, valor, abertura, fechamento, estado, obs, **kwargs):
@@ -114,7 +117,7 @@ class Btn_Pedido(Button,BoxLayout):
                 return "#FF8C00"
             case _:
                 return "#d5d5d5"
-            
+      
 
     def printar_id(self, id):
         self.id = id
@@ -239,6 +242,8 @@ class Back(Button):
 class Pedidos(Screen):
     def __init__(self, **kw):
         super().__init__(**kw)
+    def abrir_pedido(self,id):
+        self.ids.lista_pedidos.add_widget(Pedido_aberto(id))
     def gerar_codigo(self):
         timestamp = str(datetime.now())
         print(f"Carimbo de tempo: {timestamp}")
