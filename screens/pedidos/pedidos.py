@@ -88,6 +88,28 @@ class Btn_Item(Button,BoxLayout): #,
 class Pedido_aberto(BoxLayout):
     def __init__(self, id, **kwargs):
         self.id = id
+        API_URL = "http://127.0.0.1:8000/pedidos/"
+        print("#  ENTROU NO CARREGAMENTO DE PEDIDOS")
+        try:
+            print("#  ENTROU NO 'TRY' CARREGAMENTO DE PEDIDOS")
+            response = requests.get(f"{API_URL}{self.id}")
+        except:
+            return "Falha na cominicação.\nVerifique o seu funcionamento da API."
+        for i in response.json():
+            p = Pedido(**i)
+            print("# PEDIDOS AQUI")
+            #for j in vars(p):
+            #    print(j)
+            self.codigo = p.codigo
+            self.id_cliente = p.id_cliente
+            self.id_funcionario = p.id_funcionario
+            self.itens = p.itens
+            self.origem = p.origem
+            self.valor = p.valor
+            self.abertura = p.abertura
+            self.fechamento = p.fechamento
+            self.estado = p.estado
+            self.obs = p.obs
         super().__init__(**kwargs)
 
 class Btn_Pedido(Button,BoxLayout):
