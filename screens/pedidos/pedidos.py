@@ -96,7 +96,7 @@ class Pedido_aberto(BoxLayout):
         except:
             return "Falha na cominicação.\nVerifique o seu funcionamento da API."
         for i in response.json():
-            p = Pedido(**i)
+            p = Pedido(**response.json())
             print("# PEDIDOS AQUI")
             #for j in vars(p):
             #    print(j)

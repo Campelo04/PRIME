@@ -133,7 +133,8 @@
         color:.1,.1,.1
         font_size:14
     Label_Itens: #Dodos do Pedido
-        text: "Cliente: Fulano \n End de Entrega:"
+        text: str(root.codigo)+str(root.id_cliente)+str(root.id_funcionario)
+
         halign: 'center'
         size_hint_x:1
         color:.1,.1,.1
